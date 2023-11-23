@@ -11,7 +11,6 @@ endif::[]
 ifdef::context[]
 [id="deploying-an-application-to-cloudplatform_{context}"]
 endif::[]
-
 = Deploying an application to {cloudPlatform}
 
 :context: deploying-an-application-to-cloudplatform

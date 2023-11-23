@@ -1,1 +1,3 @@
+include::_app-dev-guide/attributes.adoc[]
+
 include::_app-dev-guide/main.adoc[]

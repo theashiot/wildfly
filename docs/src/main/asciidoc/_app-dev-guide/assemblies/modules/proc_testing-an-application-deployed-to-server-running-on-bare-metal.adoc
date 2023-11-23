@@ -48,6 +48,12 @@ $ mvn verify -Pintegration-testing
 [INFO] ------------------------------------------------------------------------
 ----
 
+You can undeploy the application using the following command:
+[source,options="nowrap"]
+----
+$ mvn wildfly:undeploy
+----
+
 ////
 
 [role="_additional-resources"]

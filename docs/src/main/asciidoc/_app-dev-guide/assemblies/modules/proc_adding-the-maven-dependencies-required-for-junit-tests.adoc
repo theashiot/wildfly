@@ -6,7 +6,7 @@
 = Adding the Maven dependencies and profile required for integration tests
 
 [role="_abstract"]
-To create JUnit integration tests for your applications, add the Maven dependencies required for JUnit tests.
+To create integration tests for your applications, add the required Maven dependencies
 
 .Prerequisites
 
@@ -20,48 +20,60 @@ For more information, see xref:creating-a-maven-project-for-a-hello-world-applic
 +
 [source,xml,options="nowrap"]
 ----
-<dependencies>
+<project>
 ...
-  <dependency>
-    <groupId>junit</groupId>
-    <artifactId>junit</artifactId>
-    <scope>test</scope>
-  </dependency>
-</dependencies>
+    <dependencies>
+    ...
+        <dependency>
+           <groupId>junit</groupId>
+           <artifactId>junit</artifactId>
+           <scope>test</scope>
+        </dependency>
+    </dependencies>
+</project>
 ----
 
-. Define a profile to add the dependencies required for JUnit test.
+. Define a profile to add the plug-ins required for integration tests.
 +
 [source,xml,options="nowrap"]
 ----
-<profiles>
+<project>
 ...
-<profile>
-  <id>integration-testing</id>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId> <!--1-->
-        <configuration>
-          <includes>
-            <include>**/HelloWorldServletIT</include>       <!--2-->
-          </includes>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>integration-test</goal>
-              <goal>verify</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-</profile>
-</profiles>
+    <profiles>
+    ...
+        <profile>
+            <id>integration-testing</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId> <!--1-->
+                        <configuration>
+                            <includes>
+                                <include>**/HelloWorldServletIT</include>       <!--2-->
+                            </includes>
+                        </configuration>
+                        <executions>
+                            <execution>
+                               <goals>
+                                   <goal>integration-test</goal>
+                                   <goal>verify</goal>
+                               </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
 ----
 <1> Maven plugin for running integration tests.
 <2> The name of the Java class that tests the application.
 
+[role="_additional-resources"]
+.Next steps
+* To test an application deployed on a {ProductShortName} server running on bare metal, follow this procedure:
+** xref:testing-an-application-deployed-to-server-running-on-bare-metal_testing-an-application-deployed-to-server[Testing an application deployed on {ProductShortName} that is running on bare metal]
+* To test an application deployed on a {ProductShortName} server running on {cloudPlatform}, follow this procedure:
+** xref:testing-an-application-deployed-to-server-on-cloudplaform_testing-an-application-deployed-to-server[Testing an application deployed to {ProductShortName} on {cloudPlatform}]

@@ -8,13 +8,21 @@ endif::[]
 ifdef::context[]
 [id="deploying-an-application-to-the-server_{context}"]
 endif::[]
-
 = Deploying an application to the server
 
 :context: deploying-an-application-to-the-server
 
 [role="_abstract"]
 You can deploy your application on a {ProductShortName} server running on bare metal or on {cloudPlatform}.
+
+To deploy your application on a {ProductShortName} server running on bare metal, follow this procedure:
+
+* xref:deploying-an-application-to-a-bare-metal-installation_deploying-an-application-to-the-server[Deploying an application to a bare metal installation]
+
+To deploy your application on a {ProductShortName} server running on {cloudPlatform}, follow these procedures:
+
+* xref:preparing-an-application-for-deployment-on-openshift_deploying-an-application-to-cloudplatform[Preparing an application for deployment on {cloudPlatform}]
+* xref:deploying-an-application-to-server-on-openshift-with-helm_deploying-an-application-to-cloudplatform[Deploying an application to {ProductShortname} on OpenShift with Helm]
 
 include::{pathToModules}/proc_deploying-an-application-to-a-bare-metal-installation.adoc[leveloffset=+1]
 

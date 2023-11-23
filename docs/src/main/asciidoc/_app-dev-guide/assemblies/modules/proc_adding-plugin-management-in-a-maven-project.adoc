@@ -19,7 +19,7 @@ include::fragments/frag_prereq-initialize-maven-project.adoc[]
 ----
 <properties>
 ...
-  <version.plugin.wildfly>{wildflyMavenPluginVersion}</version.plugin.wildfly>
+    <version.plugin.wildfly>{wildflyMavenPluginVersion}</version.plugin.wildfly>
 </properties>
 ----
 
@@ -27,20 +27,7 @@ include::fragments/frag_prereq-initialize-maven-project.adoc[]
 +
 [source,xml,options="nowrap"]
 ----
-<project>
-...
-  <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>    <!--1-->
-          <groupId>org.wildfly.plugins</groupId>
-          <artifactId>wildfly-maven-plugin</artifactId>
-          <version>${version.plugin.wildfly}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-</project>
+include::development/helloworld/plugin-management-pom.xml[]
 ----
 <1> You can use the `wildfly-maven-plugin` to deploy an application to {ProductShortname} using the `wildfly:deploy` command.
 

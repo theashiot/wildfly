@@ -40,10 +40,15 @@ $ mvn package wildfly:deploy
 
 .Verification
 
-* Navigate to the address `http://localhost:8080/{helloworld-QS-artifactId}/HelloWorld` in a browser.
+* Navigate to the address `http://localhost:8080/{helloworld-QS-artifactId}/` in a browser.
 +
-You get the following message:
+You are redirected to http://localhost:8080/{helloworld-QS-artifactId}/HelloWorld and you get the following message:
 +
 ----
 Hello World!
 ----
+
+[role="_additional-resources"]
+.Next steps
+* xref:testing-an-application-deployed-to-server_default[Testing an application deployed on {ProductShortName}]
+

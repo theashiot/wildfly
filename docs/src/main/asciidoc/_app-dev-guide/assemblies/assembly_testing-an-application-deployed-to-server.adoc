@@ -11,14 +11,22 @@ endif::[]
 ifdef::context[]
 [id="testing-an-application-deployed-to-server_{context}"]
 endif::[]
-
-= Testing an application deployed to {ProductShortname}
+= Testing an application deployed on {ProductShortname}
 
 :context: testing-an-application-deployed-to-server
 
 [role="_abstract"]
-To ensure that the Hello World application deployed on {ProductShortName} is working, you can integration tests.
+To ensure that the Hello World application deployed on {ProductShortName} is working, you can add integration tests.
 
+To add tests for an application deployed on a {ProductShortName} server running on bare metal, follow these procedures:
+
+* xref:adding-the-maven-dependencies-required-for-junit-tests_testing-an-application-deployed-to-server[Adding the Maven dependencies and profile required for integration tests]
+* xref:adding-the-maven-dependencies-required-for-junit-tests_testing-an-application-deployed-to-server[Testing an application deployed on {ProductShortName} that is running on bare metal]
+
+To add tests for an application deployed on a {ProductShortName} server running on {cloudPlatform}, follow these procedures:
+
+* xref:adding-the-maven-dependencies-required-for-junit-tests_testing-an-application-deployed-to-server[Adding the Maven dependencies and profile required for integration tests]
+* xref:adding-the-maven-dependencies-required-for-junit-tests_testing-an-application-deployed-to-server[Testing an application deployed to {ProductShortName} on {cloudPlatform}]
 
 include::{pathToModules}/proc_adding-the-maven-dependencies-required-for-junit-tests.adoc[leveloffset=+1]
 

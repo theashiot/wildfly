@@ -1,3 +1,5 @@
+:context: default
+
 :ProductShortName: WildFly
 :JEEE: Jakarta EE
 :GettingStartedDevelopingApplications: Getting started with developing applications

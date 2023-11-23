@@ -41,6 +41,11 @@ deploy:
 <3> Specify the directory containing the application.
 <4> Specy the number of pods to create.
 
+
+:helmName: wildfly
+:helmURL: https://docs.wildfly.org/wildfly-charts/
+:helmChart: wildfly/wildfly
+
 . Configure the {ProductShortname} repository in Helm.
 
 * If you haven't added the {ProductShortname} repository to Helm before, add it.
@@ -57,25 +62,11 @@ $ helm repo add {helmName} {helmURL}
 $ helm repo update {helmName}
 ----
 
-. Deploy the application using 
+. Deploy the application using helm.
 +
 [source,options="nowrap",subs=attributes+]
 ----
 $ helm install helloworld -f helm.yaml {helmChart}
-----
-+
-.Example output
-----
-...
-Your WildFly application is building! To follow the build, run:
-
-$ oc get build -w
-
-Note that your Deployment will report "ErrImagePull" and "ImagePullBackOff" until the build is complete. Once the build is complete, your image will be automatically rolled out.
-
-To follow the deployment of your application, run:
-
-$ oc get deployment helloworld -w
 ----
 
 .Verification
@@ -84,8 +75,19 @@ $ oc get deployment helloworld -w
 +
 [source,options="nowrap"]
 ----
-$ oc get route helloworld -o jsonpath="{.spec.host}"
+$ APPLICATION_URL=https://$(oc get route oidc-app --template='{{ .spec.host }}') &&
+echo "" &&
+echo "Application URL: $APPLICATION_URL/helloworld" 
 ----
 
 . Navigate to the route of the deployment in a browser.
++
+You are redirected to the servlet at path "/HelloWorld" and you get the following message:
++
+----
+Hello World!
+----
 
+[role="_additional-resources"]
+.Next steps
+* xref:testing-an-application-deployed-to-server_default[Testing an application deployed on {ProductShortName}]

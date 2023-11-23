@@ -19,12 +19,7 @@ Use the `maven-archetype-webapp` archetype to create a Maven project for buildin
 +
 [source,options="nowrap",subs="attributes+"]
 ----
-$ mvn archetype:generate                          \
--DgroupId={helloworld-QS-groupId}                \// <1>
--DartifactId={helloworld-QS-artifactId}                           \// <2>
--DarchetypeGroupId=org.apache.maven.archetypes    \// <3>
--DarchetypeArtifactId=maven-archetype-webapp      \// <4>
--DinteractiveMode=false                            // <5>
+include::development/helloworld/maven-generate-command.txt[]
 ----
 <1> `groupID` uniquely identifies the project.
 <2> `artifactID` is the name for the generated `jar` archive.
@@ -47,20 +42,7 @@ Ensure that the file looks like this:
 +
 [source,xml,options="nowrap"]
 ----
-<?xml version="1.0" encoding="UTF-8"?>
-
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.jboss.as.quickstarts</groupId>
-  <artifactId>helloworld</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
-
-  <name>helloworld Maven Webapp</name>
-  
-</project>
+include::development/helloworld/initial-pom.xml[]
 ----
 +
 The content was removed because it is not required for the application.

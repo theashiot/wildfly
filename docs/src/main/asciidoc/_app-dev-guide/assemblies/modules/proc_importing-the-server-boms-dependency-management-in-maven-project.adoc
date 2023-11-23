@@ -19,8 +19,8 @@ include::fragments/frag_prereq-initialize-maven-project.adoc[]
 [source,xml,options="nowrap",subs=attributes+]
 ----
 <properties>
-  <version.server>{JBossServerBOMVersion}</version.server>
-  <version.bom.ee>${version.server}</version.bom.ee>
+....
+    <version.bom.ee>${version.server}</version.bom.ee>
 </properties>
 ----
 +
@@ -30,22 +30,7 @@ The value defined in the property `<version.server>` is used as the value for BO
 +
 [source,xml,options="nowrap",subs=attributes+]
 ----
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  ...
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>{JBossGroupID}</groupId>                 <!--1-->
-            <artifactId>{JBossEAPBOMWithTools}</artifactId> <!--2-->
-            <version>${version.bom.ee}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-</project>
+include::development/helloworld/dependency-management-pom.xml[]
 ----
 <1> GroupID of the {ProductShortname}-provided BOM.
 <2> ArtifactID of the {ProductShortname}-provided BOM that provides supported {ProductShortname} {JEE} APIs plus additional {ProductShortname} API JARs and client BOMs, and development tools such as Arquillian.

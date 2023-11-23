@@ -2,8 +2,6 @@
 :_template-generated: 2023-10-28
 :_mod-docs-content-type: PROCEDURE
 
-:source-file-path-from-module: fragments/sources
-
 [id="creating-a-hello-world-servlet_{context}"]
 = Creating a hello world servlet
 
@@ -21,13 +19,15 @@ In this procedure, __<application_home>__ refers to the directory that contains 
 +
 [source,xml,options="nowrap"]
 ----
-<dependencies>
-  <dependency>                                             <!--1-->
-    <groupId>jakarta.servlet</groupId>
-    <artifactId>jakarta.servlet-api</artifactId>
-    <scope>provided</scope>                                <!--2-->
-  </dependency>
-</dependencies>
+<project>
+...
+    <dependencies>
+        <dependency>                                             <!--1-->
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>                              <!--2-->
+        </dependency>
+    </dependencies>
 ----
 <1> `jakarta.servlet-api` dependency provides Jakarta Servlet API.
 <2> Define the scope as `provided` so that the dependency is not included in the application. The reason for not including the dependency in the application is that this dependency is managed by the `{JBossEAPBOMWithTools}` BOM and such dependencies are are included with {ProductShortName}.
@@ -44,14 +44,29 @@ include::fragments/frag_creating-simple-web-application-common.adoc[]
 +
 [source,java,options="nowrap"]
 ----
-include::{source-file-path-from-module}/HelloWorldServlet.java[]
+include::development/helloworld/src/main/java/org/jboss/as/quickstarts/helloworld/HelloWorldServlet.java[]
 ----
 <1> The `@WebServlet("/HelloWorld")` annotation provides the following information to {ProductShortname}:
 +
 ** This class is a servlet.
 ** Make the servlet available at the URL "_<application_URL>_/HelloWorld".
 +
-For example, if {ProductShortname} is running on the localhost and is available at the default HTTP port, 8080, the URL is `http://localhost:8080/HelloWorld`.
+For example, if {ProductShortname} is running on the localhost and is available at the default HTTP port, 8080, the URL is `http://localhost:8080/helloworld/HelloWorld`.
+
+. Navigate to the __<application_home>__/src/main/webapp directory.
++
+You find the file "index.jsp" that Maven created. This file prints "Hello World!" when you access the application.
+
+. Update the "index.jsp" file to redirect to the Hello World servlet by replacing its content with the following content:
++
+[source,options="nowrap"]
+----
+<html>
+    <head>
+        <meta http-equiv="Refresh" content="0; URL=HelloWorld">
+    </head>
+</html>
+----
 
 . Navigate to the __<application_home>__ directory.
 
@@ -76,12 +91,3 @@ $ mvn package
 .Next steps
 
 * xref:deploying-an-application-to-the-server_default[Deploying an application to the server]
-
-////
-[role="_additional-resources"]
-.Additional resources
-
-* This section is optional.
-* Provide a bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
-* Use an unnumbered bullet (*) if the list includes only one step.
-////
