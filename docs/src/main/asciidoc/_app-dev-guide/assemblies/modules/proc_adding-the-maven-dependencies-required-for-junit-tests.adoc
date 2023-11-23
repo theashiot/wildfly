@@ -1,0 +1,67 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-11-6
+:_mod-docs-content-type: PROCEDURE
+
+[id="adding-the-maven-dependencies-required-for-junit-tests_{context}"]
+= Adding the Maven dependencies and profile required for integration tests
+
+[role="_abstract"]
+To create JUnit integration tests for your applications, add the Maven dependencies required for JUnit tests.
+
+.Prerequisites
+
+* You have created a Maven project.
++
+For more information, see xref:creating-a-maven-project-for-a-hello-world-application_default[Creating a Maven project for a hello world application].
+
+.Procedure
+
+. Add the dependncy required for tests.
++
+[source,xml,options="nowrap"]
+----
+<dependencies>
+...
+  <dependency>
+    <groupId>junit</groupId>
+    <artifactId>junit</artifactId>
+    <scope>test</scope>
+  </dependency>
+</dependencies>
+----
+
+. Define a profile to add the dependencies required for JUnit test.
++
+[source,xml,options="nowrap"]
+----
+<profiles>
+...
+<profile>
+  <id>integration-testing</id>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId> <!--1-->
+        <configuration>
+          <includes>
+            <include>**/HelloWorldServletIT</include>       <!--2-->
+          </includes>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</profile>
+</profiles>
+----
+<1> Maven plugin for running integration tests.
+<2> The name of the Java class that tests the application.
+

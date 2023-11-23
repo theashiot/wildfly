@@ -1,0 +1,59 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-11-6
+:_mod-docs-content-type: PROCEDURE
+
+[id="testing-an-application-deployed-to-server-running-on-bare-metal_{context}"]
+= Testing an application deployed on {ProductShortname} that is running on bare metal
+
+[role="_abstract"]
+Create an integration test that verifies that the application is deployed and running on {ProductShortName}, by checking that the HTTP GET of its web page returns 200 OK.
+
+In this procedure, _<application_home>_ refers to the directory that contains the `pom.xml` configuration file for the application.
+
+.Prerequisites
+
+* You have deployed the application to test.
+* You have added the Maven dependencies required for JUnit tests.
+
+.Procedure
+
+include::fragments/frag_testing-an-application.adoc[]
+ 
+.Verification
+
+. Navigate to the _<application_home>_ directory.
+
+. Run the integration test by using the `verify` command with the `integration-testing` profile.
++
+[source,options="nowrap"]
+----
+$ mvn verify -Pintegration-testing
+----
++
+.Example output
+[source,options="nowrap"]
+----
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- maven-failsafe-plugin:3.2.2:verify (default) @ helloworld ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  9.982 s
+[INFO] Finished at: 2023-11-22T14:53:54+05:30
+[INFO] ------------------------------------------------------------------------
+----
+
+////
+
+[role="_additional-resources"]
+.Additional resources
+
+* This section is optional.
+* Provide a bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
+* Use an unnumbered bullet (*) if the list includes only one step.
+////

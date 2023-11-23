@@ -1,0 +1,31 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-11-6
+
+ifdef::context[:parent-context-of-testing-an-application-deployed-to-server: {context}]
+
+:_mod-docs-content-type: ASSEMBLY
+
+ifndef::context[]
+[id="testing-an-application-deployed-to-server"]
+endif::[]
+ifdef::context[]
+[id="testing-an-application-deployed-to-server_{context}"]
+endif::[]
+
+= Testing an application deployed to {ProductShortname}
+
+:context: testing-an-application-deployed-to-server
+
+[role="_abstract"]
+To ensure that the Hello World application deployed on {ProductShortName} is working, you can integration tests.
+
+
+include::{pathToModules}/proc_adding-the-maven-dependencies-required-for-junit-tests.adoc[leveloffset=+1]
+
+include::{pathToModules}/proc_testing-an-application-deployed-to-server-running-on-bare-metal.adoc[leveloffset=+1]
+
+include::{pathToModules}/proc_testing-an-application-deployed-to-server-on-cloudplaform.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-testing-an-application-deployed-to-server[:context: {parent-context-of-testing-an-application-deployed-to-server}]
+ifndef::parent-context-of-testing-an-application-deployed-to-server[:!context:]
+

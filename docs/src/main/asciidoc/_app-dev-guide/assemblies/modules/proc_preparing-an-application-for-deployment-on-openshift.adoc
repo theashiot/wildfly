@@ -1,0 +1,85 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-10-16
+:_mod-docs-content-type: PROCEDURE
+
+[id="preparing-an-application-for-deployment-on-openshift_{context}"]
+= Preparing an application for deployment on {cloudPlatform}
+
+[role="_abstract"]
+{cloudPlatform} uses application hosted on GitHub. To deploy your application on OpenShift, you must first push your application to GitHub. After that, you can use {ProductShortname} helm chart to configure your application deployment.
+
+.Prerequisites
+
+* You have created an application.
++
+For more information, see xref:creating-a-hello-world-servlet_default[Creating a Hello World servlet].
+* You have access to {cloudPlatform} cluster.
+* You have created a repository in Github.
+ 
+.Procedure
+
+. Move the application to your local Github repository, if it already is not in it.
++
+[source,options="nowrap",subs=+quotes]
+----
+$ mv -r helloworld/ __<your_git_repo>__
+----
+
+////
+. Define the following properties in the `pom.xml` configuration file:
++
+[source,xml,options="nowrap",subs="attributes+"]
+----
+<properties>
+...
+    <version.plugin.{productNameInMaven}>{wildflyMavenPluginVersion}</version.plugin.{productNameInMaven}> <!--1-->
+</properties>
+----
+<1> `<version.plugin.{productNameInMaven}>` defines the version for {ProductShortname} Maven plugin.
+////
+
+//WildFly only
+. Define the following properties in the `pom.xml` configuration file:
++
+[source,xml,options="nowrap",subs="attributes+"]
+----
+<properties>
+...
+    <version.pack.cloud>{wildflyCloudPackVersion}</version.pack.cloud> <!--1-->
+</properties>
+----
+
+
+. Create a profile "openshift" in the `pom.xml` configuration file.
++
+This profile defines the plug-ins, feature packs, and layers required for deployment on {cloudPlatform}.
++
+[source,xml,options="nowrap",subs="attributes+"]
+----
+include::fragments/sources/openshift-profile.xml[]
+----
+<1> `{wildflyMavenPluginArtifactID}` is a {ProductShortName} plug-in for provisioning a {ProductShortName} instance, with the application deployed, on {cloudPlatform}.
+<2> `feature-pack` defines the layers required for the provisioned server.
+<3> `{cloudLayerName}` layer contains the subsystems and Jakarta EE specs to deploy application to {ProductShortname} on {cloudPlatform}.
+<4> `<filename>ROOT.war</filename>`: Defines the resulting name of the application's web archive (WAR). If `ROOT.war` is specified then the application is deployed at the root path of the server, otherwise it is deployed at `<filename/>` relative path.
+
+. Verify that the applications compiles.
++
+[source,options="nowrap"]
+----
+$ mvn package -Popenshift
+----
+
+. Push the changes to your repository.
+
+
+[role="_additional-resources"]
+.Next steps
+
+* xref:deploying-an-application-to-server-on-openshift-with-helm_deploying-an-application-to-cloudplatform[Deploying an application to {ProductShortname} on OpenShift with Helm]
+
+////
+[role="_additional-resources"]
+.Additional resources
+ 
+////

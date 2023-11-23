@@ -1,0 +1,18 @@
+include::attributes.adoc[]
+
+:toc:
+:toclevels: 3
+:numbered:
+
+:appication_development:
+
+= {GettingStartedDevelopingApplications}
+include::assemblies/assembly_creating-a-maven-project-for-a-hello-world-application.adoc[leveloffset=+1]
+
+include::assemblies/modules/proc_creating-a-hello-world-servlet.adoc[leveloffset=+1]
+
+//include::assemblies/assembly_creating-a-hello-world-application-for-server-deployment.adoc[leveloffset=+1]
+
+include::assemblies/assembly_deploying-an-application-to-the-server.adoc[leveloffset=+1]
+
+include::assemblies/assembly_testing-an-application-deployed-to-server.adoc[leveloffset=+1]

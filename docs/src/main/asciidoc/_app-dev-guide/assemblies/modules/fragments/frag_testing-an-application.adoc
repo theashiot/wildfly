@@ -1,0 +1,61 @@
+. Navigate to the _<application_home>_ directory.
+ 
+. Create a directory to store the test class.
++
+[source,options="nowrap"]
+----
+$ mkdir -p src/test/java/org/jboss/as/quickstarts/helloworld
+----
+
+. Navigate to the new directory.
++
+[source,options="nowrap"]
+----
+$ cd src/test/java/org/jboss/as/quickstarts/helloworld
+----
+
+
+. Create a Java class `HelloWorldServletIT.java` that tests the deployment.
++
+[source,java,options="nowrap"]
+----
+package org.jboss.as.quickstarts.helloworld;
+
+import org.junit.Test;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+import static org.junit.Assert.assertEquals;
+
+public class HelloWorldServletIT {
+
+    private static final String DEFAULT_SERVER_HOST = "http://localhost:8080/helloworld";                //<1>
+
+    @Test
+    public void testHTTPEndpointIsAvailable() throws IOException, InterruptedException, URISyntaxException {
+        String serverHost = System.getProperty("server.host");
+        if (serverHost == null) {
+            serverHost = DEFAULT_SERVER_HOST;
+        }
+        final HttpRequest request = HttpRequest.newBuilder()
+                .uri(new URI(serverHost+"/HelloWorld"))
+                .GET()
+                .build();                                                                                 //<2>
+        final HttpClient client = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.ALWAYS)
+                .connectTimeout(Duration.ofMinutes(1))
+                .build();                                                                                 //<3>
+        final HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString()); //<4>
+        assertEquals(200, response.statusCode());                                                         //<5>
+    }
+}
+----
+<1> The URL at which the application is running. This value is used if `sever.host` is undefined.
+<2> Create an HttpRequest instance for the application URI.
+<3> Create an HttpClient to send requests to and receive response from the application.
+<4> Get response from the application.
+<5> Test that the response revieved from the application is "200" indicating that the application is rechable.

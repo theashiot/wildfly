@@ -1,0 +1,49 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-11-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="adding-plugin-management-in-a-maven-project_{context}"]
+= Adding plug-in management in a Maven project
+
+[role="_abstract"]
+Add Maven plug-in management section to the `pom.xml` configuration file to get plug-ins required for Maven CLI commands.
+
+.Prerequisites
+
+include::fragments/frag_prereq-initialize-maven-project.adoc[]
+
+.Procedure
+. Define the value for `wildfly-maven-plugin` in the `<properties>` section.
++
+[source,xml,options="nowrap",subs=attributes+]
+----
+<properties>
+...
+  <version.plugin.wildfly>{wildflyMavenPluginVersion}</version.plugin.wildfly>
+</properties>
+----
+
+. Add `<pluginManagement>` in `<build>` section inside the `<project>` section.
++
+[source,xml,options="nowrap"]
+----
+<project>
+...
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>    <!--1-->
+          <groupId>org.wildfly.plugins</groupId>
+          <artifactId>wildfly-maven-plugin</artifactId>
+          <version>${version.plugin.wildfly}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+</project>
+----
+<1> You can use the `wildfly-maven-plugin` to deploy an application to {ProductShortname} using the `wildfly:deploy` command.
+
+[role="_additional-resources"]
+.Next steps
+* xref:verifying-a-maven-project_creating-a-maven-project-for-a-hello-world-application[Verifying a maven project]

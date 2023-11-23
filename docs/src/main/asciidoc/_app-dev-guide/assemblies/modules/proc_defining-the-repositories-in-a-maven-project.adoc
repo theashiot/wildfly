@@ -1,0 +1,97 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-11-21
+:_mod-docs-content-type: PROCEDURE
+
+[id="defining-the-repositories-in-a-maven-project_{context}"]
+= Defining the repositories in a Maven project
+
+[role="_abstract"]
+Define the artifact and plugin repositories in which Maven looks for artifacts and plugins to download.
+
+.Prerequisites
+
+include::fragments/frag_prereq-initialize-maven-project.adoc[]
+
+.Procedure
+
+. Define the artifacts repository.
++
+[source,xml,options="nowrap"]
+----
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+...
+<repositories>
+    <repository>                                                                <!--1-->
+        <id>jboss-public-maven-repository</id>
+        <name>JBoss Public Maven Repository</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        <releases>
+             <enabled>true</enabled>
+             <updatePolicy>never</updatePolicy>
+         </releases>
+         <snapshots>
+             <enabled>true</enabled>
+             <updatePolicy>never</updatePolicy>
+         </snapshots>
+             <layout>default</layout>
+    </repository>
+    <repository>                                                                <!--2-->
+        <id>redhat-ga-maven-repository</id>
+        <name>Red Hat GA Maven Repository</name>
+        <url>https://maven.repository.redhat.com/ga/</url>
+        <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+        </snapshots>
+        <layout>default</layout>
+    </repository>
+</repositories>
+</project>
+----
+<1> The Red{nbsp}Hat GA Maven repository provides all the productized {ProductShortname} and other Red{nbsp}Hat artifacts.
+<2> The JBoss Public Maven Repository provides artifacts such as WildFly Maven plugins 
+
+. Define the plugins repository.
++
+[source,xml,options="nowrap"]
+----
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+...
+
+<pluginRepositories>
+    <pluginRepository>
+        <id>jboss-public-maven-repository</id>
+        <name>JBoss Public Maven Repository</name>
+        <url>https://repository.jboss.org/nexus/content/groups/public/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+            <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+    <pluginRepository>
+        <id>redhat-ga-maven-repository</id>
+        <name>Red Hat GA Maven Repository</name>
+        <url>https://maven.repository.redhat.com/ga/</url>
+        <releases>
+            <enabled>true</enabled>
+        </releases>
+        <snapshots>
+                <enabled>true</enabled>
+        </snapshots>
+    </pluginRepository>
+</pluginRepositories>
+</project>
+----
+
+[role="_additional-resources"]
+.Next steps
+
+* xref:importing-the-server-boms-dependency-management-in-maven-project_creating-a-maven-project-for-a-hello-world-application[Importing the JBoss EAP BOMs dependency management in Maven project].

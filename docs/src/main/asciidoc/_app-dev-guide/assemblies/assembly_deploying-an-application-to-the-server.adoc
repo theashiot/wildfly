@@ -1,0 +1,28 @@
+ifdef::context[:parent-context-of-deploying-an-application-to-the-server: {context}]
+
+:_content-type: ASSEMBLY
+
+ifndef::context[]
+[id="deploying-an-application-to-the-server"]
+endif::[]
+ifdef::context[]
+[id="deploying-an-application-to-the-server_{context}"]
+endif::[]
+
+= Deploying an application to the server
+
+:context: deploying-an-application-to-the-server
+
+[role="_abstract"]
+You can deploy your application on a {ProductShortName} server running on bare metal or on {cloudPlatform}.
+
+include::{pathToModules}/proc_deploying-an-application-to-a-bare-metal-installation.adoc[leveloffset=+1]
+
+include::assembly_deploying-an-application-to-cloudplatform.adoc[leveloffset=+1]
+
+
+//include::con_application-deployment-options.adoc[leveloffset=+1]
+
+ifdef::parent-context-of-deploying-an-application-to-the-server[:context: {parent-context-of-deploying-an-application-to-the-server}]
+ifndef::parent-context-of-deploying-an-application-to-the-server[:!context:]
+

@@ -1,0 +1,178 @@
+:_content-type: PROCEDURE
+
+[id="deploying-an-application-to-a-cloud-platform_{context}"]
+= Deploying an application to {cloudPlatform}
+
+[role="_abstract"]
+
+You can use the `{maven-plugin}` to deploy your application to {cloudPlatform}.
+
+.Prerequisites
+
+* You have created an application.
+* You have access to {cloudPlatform} cluster.
+* You have installed helm.
+* You have installed `oc`.
+* You have created a reporitory in Github.
+ 
+.Procedure
+
+. Move the application to your local Github repository, if it already is not in it.
++
+[source,options="nowrap",subs=+quotes]
+----
+$ mv -r helloworld/__<git_repo>__
+----
+
+. Define the following properties in the `pom.xml` configuration file:
++
+[source,xml,options="nowrap"]
+----
+<properties>
+...
+    <version.pack.cloud>{version-pack-cloud}</version.pack.cloud>
+</properties>
+----
+
+
+. Update the `pom.xml` configuration file to include {maven-plugin}.
++
+[source,xml,options="nowrap"]
+----
+<profiles>
+    <profile>
+        <id>openshift</id>
+        <build>
+            <plugins>
+                <plugin>
+                     <groupId>org.wildfly.plugins</groupId>
+                     <artifactId>wildfly-maven-plugin</artifactId>     <!--1-->
+                     <version>${version.plugin.wildfly}</version> <!-- QUESTION:is this required? -->
+                     <configuration>
+                         <feature-packs>
+                             <feature-pack>                            <!--2-->
+                                 <location>org.wildfly:wildfly-galleon-pack:${version.server}</location>
+                             </feature-pack>
+                             <feature-pack>
+                                 <location>org.wildfly.cloud:wildfly-cloud-galleon-pack:${version.pack.cloud}
+                                 </location>
+                             </feature-pack>
+                         </feature-packs>
+                         <layers>
+                             <layer>cloud-server</layer>               <!--3-->
+                         </layers>
+                         <filename>ROOT.war</filename>                 <!--4-->
+                     </configuration>
+                     <executions>
+                         <execution>
+                             <goals>
+                                 <goal>package</goal>
+                             </goals>
+                         </execution>
+                     </executions>
+                </plugin>
+            </plugins>
+        </build>
+    </profile>
+</profiles>
+----
+<1> `wildfly-maven-plugin`: {ProductShortname} plug-in for deploying, redeploying, undeploying, and running an application.
+<2> `feature-pack`: Defined in the `<location>` element, `org.wildfly:wildfly-galleon-pack:${version.server}` contains the layers required for the provisioned server.
+<3> `cloud-server`: This layer contains the subsystems and Jakarta EE specs to daploy application to {ProductShortname} on {cloudPlatform}.
+<4> `<filename>ROOT.war</filename>`: Defines the resulting name of the web archive (WAR) when packaged 
+
+. Compile the application.
++
+[source,options="nowrap"]
+----
+$ mvn package -Pprovisioned-server
+----
++
+//This could be a separate module
+
+. Create a directory called `charts` in the application root directoy and navigate to it.
++
+[source,options="nowrap"]
+----
+$ mkdir charts; cd charts
+----
+
+. Create a file `helm.yaml` with the following content:
++
+[source,yaml,optinos="nowrap",subs=+quotes]
+----
+build:
+  uri: https://github.com/__<user>__/__<repository>__.git
+  ref: __<branch_name>__
+  contextDir: helloworld
+deploy:
+  replicas: 1
+----
+
+. Push the changes to your repository.
++
+[source,options="nowrap"]
+----
+$ git add --all
+$ git commit -m "application for OpenShift deployment"
+$ git push origin HEAD
+----
+
+. Add the wildfly repository to Helm.
++
+[source,options="nowrap"]
+----
+$ helm repo add wildfly https://docs.wildfly.org/wildfly-charts/
+----
+
+. Login to your {cloudPlatform}.
++
+[source,options="nowrap",subs=+quotes]
+---
+$ oc login __<login_credentials>__
+---
+
+. Deploy the application using 
++
+[source,options="nowrap"]
+----
+$ helm install helloworld -f charts/helm.yaml wildfly/wildfly
+
+NAME: helloworld
+LAST DEPLOYED: Mon Sep 25 00:25:26 2023
+NAMESPACE: amehenda-dev
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+Your WildFly application is building! To follow the build, run:
+
+$ oc get build -w
+
+Note that your Deployment will report "ErrImagePull" and "ImagePullBackOff" until the build is complete. Once the build is complete, your image will be automatically rolled out.
+
+To follow the deployment of your application, run:
+
+$ oc get deployment helloworld -w
+----
+
+
+.Verification
+
+. Get the URL of the route to the deployment.
++
+[source,options="nowrap"]
+----
+$ oc get route helloworld -o jsonpath="{.spec.host}"
+----
+
+. Navigate to the route of the deployment in a browser.
+
+////
+[role="_additional-resources"]
+.Additional resources
+
+* This section is optional.
+* Provide a bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
+* Use an unnumbered bullet (*) if the list includes only one step.
+////

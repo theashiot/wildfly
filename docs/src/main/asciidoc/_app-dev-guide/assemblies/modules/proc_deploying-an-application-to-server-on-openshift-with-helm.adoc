@@ -1,0 +1,91 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-10-16
+:_mod-docs-content-type: PROCEDURE
+
+[id="deploying-an-application-to-server-on-openshift-with-helm_{context}"]
+= Deploying an application to {ProductShortname} on OpenShift with Helm
+
+[role="_abstract"]
+Use the {ProductShortname} Helm chart to configure and deploy application to {ProductShortname} on OpenShift with Helm.
+
+.Prerequisites
+
+* You have prepared your application for deployment on {cloudPlatform}.
++
+For more information, see xref:preparing-an-application-for-deployment-on-openshift_deploying-an-application-to-cloudplatform[Preparing an application for deployment on OpenShift Container Platform].
+* You have installed helm.
+* You are logged in to {cloudPlatform} from your machine.
+
+.Procedure
+
+. Create a directory called `charts` in the application root directoy and navigate to it. Application root directory is the one that contains `pom.xml` configuration file.
++
+[source,options="nowrap"]
+----
+$ mkdir charts; cd charts
+----
+
+. Create a file `helm.yaml` with the following content:
++
+[source,yaml,optinos="nowrap",subs=+quotes]
+----
+build:
+  uri: https://github.com/__<user>__/__<repository>__.git     <1>
+  ref: __<branch_name>__                                  <2>
+  contextDir: helloworld                              <3>
+deploy:
+  replicas: 1                                         <4>
+----
+<1> Specify the URL for your GitHub repository that contains the application to deploy on {cloudPlatform}.
+<2> Specify the Git branch that contains your application.
+<3> Specify the directory containing the application.
+<4> Specy the number of pods to create.
+
+. Configure the {ProductShortname} repository in Helm.
+
+* If you haven't added the {ProductShortname} repository to Helm before, add it.
++
+[source,options="nowrap",subs=attributes+]
+----
+$ helm repo add {helmName} {helmURL}
+----
+
+* If you already have added the {ProductShortname} repository to Helm, update it.
++
+[source,options="nowrap",subs=attributes+]
+----
+$ helm repo update {helmName}
+----
+
+. Deploy the application using 
++
+[source,options="nowrap",subs=attributes+]
+----
+$ helm install helloworld -f helm.yaml {helmChart}
+----
++
+.Example output
+----
+...
+Your WildFly application is building! To follow the build, run:
+
+$ oc get build -w
+
+Note that your Deployment will report "ErrImagePull" and "ImagePullBackOff" until the build is complete. Once the build is complete, your image will be automatically rolled out.
+
+To follow the deployment of your application, run:
+
+$ oc get deployment helloworld -w
+----
+
+.Verification
+
+. Get the URL of the route to the deployment.
++
+[source,options="nowrap"]
+----
+$ oc get route helloworld -o jsonpath="{.spec.host}"
+----
+
+. Navigate to the route of the deployment in a browser.
+

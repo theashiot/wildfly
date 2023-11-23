@@ -1,0 +1,87 @@
+:_newdoc-version: 2.15.0
+:_template-generated: 2023-10-28
+:_mod-docs-content-type: PROCEDURE
+
+:source-file-path-from-module: fragments/sources
+
+[id="creating-a-hello-world-servlet_{context}"]
+= Creating a hello world servlet
+
+[role="_abstract"]
+Create a servlet that returns "Hello world!" when accessed.
+
+In this procedure, __<application_home>__ refers to the directory that contains the `pom.xml` configuration file for the application.
+
+.Prerequisites
+* You have created a Maven project.
+
+.Procedure
+
+. Add the required dependency to `pom.xml` configuration file after the `<dependencyManagement>` section.
++
+[source,xml,options="nowrap"]
+----
+<dependencies>
+  <dependency>                                             <!--1-->
+    <groupId>jakarta.servlet</groupId>
+    <artifactId>jakarta.servlet-api</artifactId>
+    <scope>provided</scope>                                <!--2-->
+  </dependency>
+</dependencies>
+----
+<1> `jakarta.servlet-api` dependency provides Jakarta Servlet API.
+<2> Define the scope as `provided` so that the dependency is not included in the application. The reason for not including the dependency in the application is that this dependency is managed by the `{JBossEAPBOMWithTools}` BOM and such dependencies are are included with {ProductShortName}.
++
+[NOTE]
+====
+The dependency is defined without a version because `{JBossEAPBOMWithTools}` BOM was imported in the `<dependencyManagement>` section.
+====
+
++
+include::fragments/frag_creating-simple-web-application-common.adoc[]
+
+. Create the Servlet `HelloWorldServlet.java` that returns "Hello World!".
++
+[source,java,options="nowrap"]
+----
+include::{source-file-path-from-module}/HelloWorldServlet.java[]
+----
+<1> The `@WebServlet("/HelloWorld")` annotation provides the following information to {ProductShortname}:
++
+** This class is a servlet.
+** Make the servlet available at the URL "_<application_URL>_/HelloWorld".
++
+For example, if {ProductShortname} is running on the localhost and is available at the default HTTP port, 8080, the URL is `http://localhost:8080/HelloWorld`.
+
+. Navigate to the __<application_home>__ directory.
+
+. Compile and package the application as a web archive (WAR) with the following command:
++
+[source,options="nowrap"]
+----
+$ mvn package
+----
++
+.Example output
+[source,options="nowrap"]
+----
+...
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+...
+----
+
+[role="_additional-resources"]
+.Next steps
+
+* xref:deploying-an-application-to-the-server_default[Deploying an application to the server]
+
+////
+[role="_additional-resources"]
+.Additional resources
+
+* This section is optional.
+* Provide a bulleted list of links to other closely-related material. These links can include `link:` and `xref:` macros.
+* Use an unnumbered bullet (*) if the list includes only one step.
+////
