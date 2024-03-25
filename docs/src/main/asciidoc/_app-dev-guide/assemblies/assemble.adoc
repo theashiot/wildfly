@@ -1,4 +1,4 @@
-include::modules/con_introduction.adoc[]
+include::modules/con_introduction.adoc[leveloffset=+1]
 
 include::assembly_creating-a-maven-project-for-a-hello-world-application.adoc[leveloffset=+1]
 
