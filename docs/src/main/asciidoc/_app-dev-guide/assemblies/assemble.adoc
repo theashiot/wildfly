@@ -1,0 +1,7 @@
+include::assembly_creating-a-maven-project-for-a-hello-world-application.adoc[leveloffset=+1]
+
+include::modules/proc_creating-a-hello-world-servlet.adoc[leveloffset=+1]
+
+include::assembly_deploying-an-application-to-the-server.adoc[leveloffset=+1]
+
+include::assembly_testing-an-application-deployed-to-server.adoc[leveloffset=+1]
