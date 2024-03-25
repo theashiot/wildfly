@@ -17,7 +17,7 @@ include::_app-dev-guide/attributes.adoc[]
 
 = {GettingStartedDevelopingApplications}
 
-This guide covers how to develop, from scratch, test, and deploy applications on {ProductShortName}. If you are already familiar with some areas, use the table of contents to jump ahead.
+//This guide covers how to develop, from scratch, test, and deploy applications on {ProductShortName}. If you are already familiar with some areas, use the table of contents to jump ahead.
 
 //include::_app-dev-guide/assemblies/modules/con_introduction-to-developing-applications-for-server-deployment.adoc[leveloffset=+1]
 

@@ -1,0 +1,9 @@
+:_newdoc-version: 2.17.0
+:_template-generated: 2024-03-25
+
+:_mod-docs-content-type: CONCEPT
+
+[id="introduction_{context}"]
+= Introduction
+
+This is a wonderful intro to creating applications for {ProductShortName}.
