@@ -6,4 +6,6 @@
 [id="introduction_{context}"]
 = Introduction
 
-This is a wonderful intro to creating applications for {ProductShortName}.
+This is an intro for the guide. We really hope you like it, find it useful and fun!
+
+Let's dive into it. You can use the {ProductShortName} quickstart at {EAPQuickStartRepo}.
