@@ -10,6 +10,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+import jakarta.batch.operations.JobExecutionNotRunningException;
+import jakarta.batch.operations.JobSecurityException;
+import jakarta.batch.operations.NoSuchJobExecutionException;
 
 import org.jboss.as.controller.PathAddress;
 import org.jboss.as.controller.PathElement;
@@ -130,6 +133,7 @@ public class BatchJobExecutionResource implements Resource {
     public Set<String> getChildrenNames(final String childType) {
         if (BatchJobExecutionResourceDefinition.EXECUTION.equals(childType)) {
             synchronized (children) {
+                System.out.println("\n\n=== Called BatchJobExecutionResource.getChildrenNames");
                 refreshChildren();
                 return new LinkedHashSet<>(children);
             }
@@ -199,6 +203,7 @@ public class BatchJobExecutionResource implements Resource {
                 return true;
             }
             // Load a cache of the names
+            System.out.println("\n\n=== Called BatchJobExecutionResource.hasJobExecution ");
             refreshChildren();
             return children.contains(executionName);
         }
@@ -212,8 +217,22 @@ public class BatchJobExecutionResource implements Resource {
         if (System.currentTimeMillis() - lastRefreshedTime < refreshMinInterval) {
             return;
         }
-
+        System.out.println("\n\n=== Called BatchJobExecutionResource.refreshChildren");
         final List<Long> executionIds = jobOperator.getJobExecutionsByJob(jobName);
+        final List<Long> stoppingExecutionIds = jobOperator.getStoppingExecutions(jobName);
+        // Executions left in the STOPPING state need a stop request issued against them, otherwise they would never
+        // transition out of that state.
+        for (Long executionId : stoppingExecutionIds) {
+            try {
+                jobOperator.stop(executionId);
+            } catch (NoSuchJobExecutionException | JobExecutionNotRunningException e) {
+                // The execution either no longer exists or has already finished stopping, nothing more to do
+                BatchLogger.LOGGER.debugf(e, "Execution %d of job %s could not be stopped as it is no longer running.",
+                        executionId, jobName);
+            } catch (JobSecurityException e) {
+                BatchLogger.LOGGER.warnf(e, "Not permitted to stop execution %d of job %s.", executionId, jobName);
+            }
+        }
         final Set<String> asNames = executionIds.stream().map(Object::toString).collect(Collectors.toSet());
         children.clear();
         children.addAll(asNames);

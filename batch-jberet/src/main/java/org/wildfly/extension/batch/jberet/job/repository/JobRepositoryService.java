@@ -152,6 +152,12 @@ abstract class JobRepositoryService implements JobRepository, Service<JobReposit
     }
 
     @Override
+    public List<Long> getStoppingExecutions(final String jobName) {
+        return getAndCheckDelegate().getStoppingExecutions(jobName);
+    }
+
+
+    @Override
     public void removeJobExecutions(final JobExecutionSelector jobExecutionSelector) {
         getAndCheckDelegate().removeJobExecutions(jobExecutionSelector);
     }

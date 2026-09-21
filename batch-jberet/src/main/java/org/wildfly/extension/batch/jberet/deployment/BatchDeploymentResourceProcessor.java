@@ -31,8 +31,11 @@ public class BatchDeploymentResourceProcessor implements DeploymentUnitProcessor
     @Override
     public void deploy(final DeploymentPhaseContext phaseContext) throws DeploymentUnitProcessingException {
         final DeploymentUnit deploymentUnit = phaseContext.getDeploymentUnit();
+        System.out.println("Called deploy on " + deploymentUnit.getName());
         if (deploymentUnit.hasAttachment(Attachments.MODULE) && !DeploymentTypeMarker.isType(DeploymentType.EAR, deploymentUnit) && deploymentUnit.hasAttachment(Attachments.DEPLOYMENT_ROOT)) {
             BatchLogger.LOGGER.tracef("Processing deployment '%s' for the batch deployment resources.", deploymentUnit.getName());
+            System.out.printf("Processing deployment '%s' for the batch deployment resources.\n", deploymentUnit.getName());
+
             final DeploymentResourceSupport deploymentResourceSupport = deploymentUnit.getAttachment(Attachments.DEPLOYMENT_RESOURCE_SUPPORT);
             // Add the job operator service used interact with a deployments batch job
             final WildFlyJobOperator jobOperator = deploymentUnit.getAttachment(BatchAttachments.JOB_OPERATOR);
@@ -42,6 +45,7 @@ public class BatchDeploymentResourceProcessor implements DeploymentUnitProcessor
                 try {
                     // Add the job information to the service
                     BatchLogger.LOGGER.debugf("Added job %s to allowed jobs for deployment %s", jobName, deploymentUnit.getName());
+                    System.out.println("Added job "+ jobName +" to allowed jobs for deployment " + deploymentUnit.getName());
                     // Register the a resource for each job found
                     final PathAddress jobAddress = PathAddress.pathAddress(BatchJobResourceDefinition.JOB, jobName);
                     if (!deploymentResourceSupport.hasDeploymentSubModel(subsystemName, jobAddress)) {

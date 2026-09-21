@@ -52,6 +52,14 @@ interface WildFlyJobOperator extends JobOperator {
     List<Long> getJobExecutionsByJob(final String jobName);
 
     /**
+     * Gets job execution ids belonging to the job identified by the {@code jobName}.
+     * @param jobName the job name identifying the job that is in the STOPPING state
+     * @return job execution ids belonging to the job
+     * @since TBD
+     */
+    List<Long> getStoppingExecutions(final String jobName);
+
+    /**
      * Allows safe execution of a method catching any {@link NoSuchJobException} thrown. If the exception is thrown the
      * default value is returned, otherwise the value from the supplier is returned.
      *
